@@ -4,38 +4,44 @@
         <form class="registration-form">
             <div class="registration-form-field">
                 <label for="fullname" class="registration-form-label">Full Name:</label>
-                <input type="text" id="fullname" class="registration-form-input"/>
+                <input type="text" id="fullname" class="registration-form-input" v-model="memberRegisterRequest.name"/>
             </div>
             <div class="registration-form-field">
                 <label for="email" class="registration-form-label">Email:</label>
-                <input type="text" id="email" class="registration-form-input"/>
+                <input type="text" id="email" class="registration-form-input" v-model="memberRegisterRequest.email"/>
             </div>
             <div class="registration-form-field">
                 <label for="password" class="registration-form-label">Password:</label>
-                <input type="password" id="password" class="registration-form-input"/>
+                <input type="password" id="password" class="registration-form-input" v-model="memberRegisterRequest.password"/>
             </div>
             <div class="registration-form-field">
-                <button type="submit" @click="register" id="regBtn">Register</button>
+                <button type="submit" @click.prevent="register" id="regBtn">Register</button>
             </div>
         </form>
     </div>
-    <div class="splash-page">
-  <img src="../assets/splashBG.png">
-</div>
 </template>
-
 <script>
+import RegisterService from "../services/RegisterService.js";
 export default {
     name: "RegistrationForm",
     data() {
         return {
-            studentLoginRequest: { studentId: "", password: "" },
+            memberRegisterRequest: { name: "", email: "", password: "" },
             message: ""
         };
     },
     methods: {
         register() {
-            // handle form submission here
+            RegisterService.register(this.memberRegisterRequest)
+                .then(response => {
+                    // Assuming the response will return a token
+                    localStorage.setItem("token", response.data.token);
+                    this.message = response.data.message;
+                    this.$router.push("/login");
+                })
+                .catch(e => {
+                    this.message = e.response.data.message;
+                });
         }
     }
 };

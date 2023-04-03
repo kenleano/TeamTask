@@ -2,40 +2,56 @@
 
 <template>
     <div class="login-form-container">
-        <h4 id="loginTitle">Login to Team Task</h4>
-        <br>
-        <form >
-            <div class="login-form-field">
-                <label for="email" class="login-form-label">Email:</label>
-                <input type = "text" class="login-form-input"/>
-            </div>
-            <div class="login-form-field">
-                <label for="password" class="login-form-label">Password:</label>
-                <input type = "password"  class="login-form-input" />
-            </div>
-            <div>
-                <button type="submit" id="loginBtn"><router-link to="projects">Login</router-link></button>
-            </div>
-        </form>
+      <h4 id="loginTitle">Login to Team Task</h4>
+      <br>
+      <form @submit.prevent="login">
+        <div class="login-form-field">
+          <label for="email" class="login-form-label">Email:</label>
+          <input type="text" class="login-form-input" v-model="email"/>
+        </div>
+        <div class="login-form-field">
+          <label for="password" class="login-form-label">Password:</label>
+          <input type="password" class="login-form-input" v-model="password"/>
+        </div>
+        <div>
+          <button type="submit" id="loginBtn">Login</button>
+        </div>
+      </form>
     </div>
     <div class="splash-page">
-  <img src="../assets/splashBG.png">
-</div>
-</template>
-
-<script>
-
-
-export default {
+      <img src="../assets/splashBG.png">
+    </div>
+  </template>
+  
+  <script>
+  import LoginService from '../services/LoginService';
+  
+  export default {
     name: "LoginForm",
     data() {
+      return {
+        email: '',
+        password: '',
+      }
+    },
+    methods: {
+      async login() {
+        try {
+          // make a request to the server to authenticate the user with the email and password provided
+          const response = await LoginService.login(this.email, this.password);
+          // store the access token in local storage
+          localStorage.setItem('token', response.data.token);
 
-            return {
-             
-            }
+          // redirect the user to the projects page
+          this.$router.push('/projects');
+        } catch (error) {
+          console.error(error);
+        }
+      }
     }
-}
-</script>
+  }
+  </script>
+  
 
 <style>
 .login-form-container {

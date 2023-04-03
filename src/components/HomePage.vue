@@ -3,10 +3,13 @@
     <img src="../assets/tt-logo.png" id="logoSplash">
     <h1>Welcome to TeamTask</h1>
     <button id="login">
-      <router-link to="login" style="text-decoration: none">Login</router-link>
+      <router-link to="/auth/authenticate" style="text-decoration: none">Login</router-link>
     </button>
     <button id="register">
       <router-link to="register" style="text-decoration: none">Register</router-link>
+    </button>
+    <button id="register">
+      <router-link to="projects" style="text-decoration: none">Dashboard</router-link>
     </button>
     <div class="splash-page">
       <img src="../assets/splashBG.png">
