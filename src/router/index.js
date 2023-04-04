@@ -26,7 +26,7 @@ const routes = [
         component: RegistrationForm
     },
     {
-        path: "/login",
+        path: "/auth/authenticate",
         alias: "/login",
         name: "LoginForm",
         component: LoginForm

@@ -2,15 +2,15 @@
     <div class="profile-form-container">
         <form>
             <div class="form-group">
-                <label for="fullName" class="profile-label">Full Name</label>
-                <input type="text" class="profile-input" placeholder="Manager Name">
+                <label for="fullName" className="profile-label">Full Name</label>
+                <input type="text" className="profile-input" placeholder="Manager Name">
             </div>
             
             <div class="form-group">
-                <label for="email" class="profile-label">Email address</label>
-                <input type="text"  class="profile-input" placeholder="manager@teamtask.com">
+                <label for="email" className="profile-label">Email address</label>
+                <input type="text"  className="profile-input" placeholder="manager@teamtask.com">
             </div>
-            <label for="email" class="profile-label">Members</label>
+            <label className="profile-label">Members</label>
             <MemberCard />
         </form>
     </div>
