@@ -2,40 +2,70 @@
 
 <template>
     <div class="login-form-container">
-        <h4 id="loginTitle">Login to Team Task</h4>
-        <br>
-        <form >
-            <div class="login-form-field">
-                <label for="email" class="login-form-label">Email:</label>
-                <input type = "text" class="login-form-input"/>
-            </div>
-            <div class="login-form-field">
-                <label for="password" class="login-form-label">Password:</label>
-                <input type = "password"  class="login-form-input" />
-            </div>
-            <div>
-                <button type="submit" id="loginBtn"><router-link to="projects">Login</router-link></button>
-            </div>
-        </form>
+      <h4 id="loginTitle">Login to Team Task</h4>
+      <br>
+      <form @submit.prevent="login">
+        <div class="login-form-field">
+          <label for="email" class="login-form-label">Email:</label>
+          <input v-model="email" type="text" class="login-form-input"/>
+        </div>
+        <div class="login-form-field">
+          <label for="password" class="login-form-label">Password:</label>
+          <input v-model="password" type="password" class="login-form-input" />
+        </div>
+        <div>
+          <button type="submit" id="loginBtn">Login</button>
+        </div>
+      </form>
+      <div class="splash-page">
+        <img src="../assets/splashBG.png">
+      </div>
+      <div v-if="error" class="alert alert-danger">
+        {{ error }}
+        <button @click="error = ''" class="close">&times;</button>
+      </div>
+      <div v-if="confirmMessage" class="alert alert-success">
+        {{ confirmMessage }}
+        <button @click="confirmMessage = ''" class="close">&times;</button>
+      </div>
     </div>
-    <div class="splash-page">
-  <img src="../assets/splashBG.png">
-</div>
-</template>
-
-<script>
-
-
-export default {
-    name: "LoginForm",
+  </template>
+  
+  <script>
+  import LoginService from '@/services/LoginService.js';
+  
+  export default {
+    name: 'LoginForm',
     data() {
-
-            return {
-             
+      return {
+        email: '',
+        password: '',
+        error: '',
+        confirmMessage: ''
+      };
+    },
+    methods: {
+      login() {
+        LoginService.login(this.email, this.password)
+          .then(response => {
+            if (response.token) {
+              localStorage.setItem('user', JSON.stringify(response));
+              this.confirmMessage = 'Login Successful';
+              this.$router.push('/projects');
+            } else {
+              this.error = 'Invalid email or password';
             }
+          })
+          .catch(error => {
+            console.log(error);
+            this.error = 'Invalid email or password';
+          });
+      }
     }
-}
-</script>
+  };
+  </script>
+  
+  
 
 <style>
 .login-form-container {
