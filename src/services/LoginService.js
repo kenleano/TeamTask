@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "http://localhost:8089";
+const API_URL = 'http://localhost:8089'; // Change this to your API URL
 
 class LoginService {
   login(email, password) {
@@ -11,26 +11,20 @@ class LoginService {
       })
       .then(response => {
         if (response.data.token) {
+          console.log(response.data.token); 
           localStorage.setItem('user', JSON.stringify(response.data));
         }
 
         return response.data;
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 401) {
-          throw new Error('Invalid email or password');
-        }
-        throw error;
       });
   }
 
   logout() {
-    localStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem('user');
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem('user'));
   }
 }
 

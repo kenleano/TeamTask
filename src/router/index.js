@@ -6,7 +6,10 @@ import ProjectPage from '../components/ProjectPage'
 import TaskPage from '../components/TaskPage'
 import MembersPage from '../components/MembersPage'
 import ProfilePage from '../components/ProfilePage'
+import AdminPage from '../components/AdminComponents/AdminPage'
 import CommentsPageVue from '@/components/CommentsPage.vue'
+import AdminAddprojects from '../components/AdminComponents/AdminAddprojects'
+import AdminShowprojects from '../components/AdminComponents/AdminShowprojects'
 //import TaskContentVue from '@/components/TaskContent.vue'
 
 // Anytime a url is found in this router,
@@ -30,6 +33,12 @@ const routes = [
         alias: "/login",
         name: "LoginForm",
         component: LoginForm
+    },
+    {
+        path: "/admin",
+        alias: "/admin",
+        name: "AdminPage",
+        component: AdminPage
     },
     {
         path: "/projects",
@@ -67,7 +76,21 @@ const routes = [
         alias: "/comments",
         name: "comments",
         component: CommentsPageVue
+    }, 
+    {
+        path: "/adminAddprojects",
+        alias: "/adminAddprojects",
+        name: "adminAddprojects",
+        component: AdminAddprojects
+    }, 
+    {
+        path: "/adminShowprojects",
+        alias: "/adminShowprojects",
+        name: "adminShowprojects",
+        component: AdminShowprojects
     }
+
+
 
 
     

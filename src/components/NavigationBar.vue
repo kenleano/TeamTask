@@ -4,6 +4,7 @@
         <li><router-link to="/profile">Profile</router-link></li>
         <li><router-link to="/projects">Projects</router-link></li>
         <li><router-link to="/members">Members</router-link></li>
+        <li><router-link to="/admin">Admin</router-link></li>
       </ul>
     </nav>
   </template>

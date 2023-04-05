@@ -50,6 +50,9 @@
           .then(response => {
             if (response.token) {
               localStorage.setItem('user', JSON.stringify(response));
+              localStorage.setItem('token', response.token);
+              localStorage.setItem('token', JSON.stringify(response.token));
+              console.log( JSON.parse(localStorage.getItem('token')))
               this.confirmMessage = 'Login Successful';
               this.$router.push('/projects');
             } else {
