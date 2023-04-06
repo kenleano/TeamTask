@@ -114,7 +114,7 @@
 
 </div>
 </div>
-<ProjectVue :project="selectProject" v-if="detailsShown"  />
+<ProjectVue :project="selectProject" v-if="detailsShown"  :member="members"/>
 </div>
 </template>
 <script>
@@ -142,9 +142,10 @@ import 'bootstrap/dist/css/bootstrap.css';
       desciption:'', 
       date:'',
       projects:[], 
+      members:[], 
       showTable:false, 
       toupdate:0, 
-      selectProject:"", 
+      selectProject:Object, 
 
 
 
@@ -153,6 +154,7 @@ import 'bootstrap/dist/css/bootstrap.css';
     },
     mounted() {
     this.getProjects();
+    this.getMembers(); 
     },
     methods: {
       handleAddProjectClick() {
@@ -190,6 +192,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 
       }
     }, 
+    async getMembers(){
+      try{
+          const response= await AdminService.getMembers(); 
+          console.log(response.data); 
+          this.members= response.data; 
+      }catch (e){
+        console.log(e); 
+      }
+    }, 
     async deleteProject(projectID){
       try{
         const response = await AdminService.deleteProjects(projectID);
@@ -204,17 +215,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 
     }, 
      updateProject(projectID){
-      this.activeUpdate= true; 
-      this.activeAdd= false;
-      console.log(projectID); 
-      var projectID2= projectID-this.projects.length; 
-      console.log(projectID); 
-      this.name= this.projects[projectID2].name; 
-      this.desciption= this.projects[projectID2].description; 
-      console.log(this.projects[projectID2].deadLine.substring(-10,10) );
-      this.date=this.projects[projectID2].deadLine.substring(-10,10); 
-      this.toupdate= projectID; 
+        
+        this.activeUpdate= true; 
+        this.activeAdd= false;
 
+        var projectGet= this.projects.find(obj=>obj.id===projectID); 
+        this.name= projectGet.name; 
+        this.desciption= projectGet.description; 
+        this.date=projectGet.deadLine.substring(-10,10); 
+        this.toupdate= projectID; 
 
     }, 
     async updateProjectAss(){
@@ -235,8 +244,10 @@ import 'bootstrap/dist/css/bootstrap.css';
       } 
     }, 
     detailPject(projectID){
+      console.log(projectID+"selected");
+      this.selectProject= this.projects.find(obj=>obj.id===projectID); 
       this.detailsShown=true; 
-      this.selectProject= this.projects[projectID-this.projects.length]; 
+      
 
     }
 
