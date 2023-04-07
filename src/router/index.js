@@ -7,6 +7,10 @@ import TaskPage from '../components/TaskPage'
 import MembersPage from '../components/MembersPage'
 import ProfilePage from '../components/ProfilePage'
 import CommentsPageVue from '@/components/CommentsPage.vue'
+import MemberProjectPage from '@/components/MemberComponents/MemberProjectPage.vue'
+import MemberProfilePage from '@/components/MemberComponents/MemberProfilePage.vue'
+import LoginMember from '@/components/LoginMember.vue'
+import MemberTaskPageVue from '@/components/MemberComponents/MemberTaskPage.vue'
 //import TaskContentVue from '@/components/TaskContent.vue'
 
 // Anytime a url is found in this router,
@@ -37,6 +41,7 @@ const routes = [
         name: "ProjectPage",
         component: ProjectPage
     },
+ 
     {
         path: "/tasks",
         alias: "/tasks",
@@ -54,8 +59,25 @@ const routes = [
         alias: "/members",
         name: "Members",
         component: MembersPage
-    }
-    ,
+    },
+    {
+        path: "/api2/m/projects",
+        alias: "/projects",
+        name: "MemberProjectPage",
+        component: MemberProjectPage
+    },
+    {
+        path: "/api2/m/profile",
+        alias: "/projects",
+        name: "ProjectPage",
+        component: MemberProfilePage
+    },
+    {
+        path: "/loginMember",
+        alias: "/projects",
+        name: "LoginMember",
+        component: LoginMember
+    },
     {
         path: "/profile",
         alias: "/profile",
@@ -63,12 +85,17 @@ const routes = [
         component: ProfilePage
     },
     {
-        path: "/comments",
+        path: "/api2/m/tasks",
         alias: "/comments",
-        name: "comments",
+        name: "MemberTaskPageVue",
+        component: MemberTaskPageVue
+    },
+    {
+        path: "/api2/m/projects1",
+        alias: "/comments",
+        name: "CommentsPageVue",
         component: CommentsPageVue
     }
-
 
     
 ];

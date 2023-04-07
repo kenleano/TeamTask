@@ -51,7 +51,7 @@ vue components must contain two words "StudentLogin.vue"
             if (response.token) {
               localStorage.setItem('user', JSON.stringify(response));
               this.confirmMessage = 'Login Successful';
-              this.$router.push('/projects');
+              this.$router.push('/api2/m/projects');
             } else {
               this.error = 'Invalid email or password';
             }
