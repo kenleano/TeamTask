@@ -62,11 +62,19 @@ class AdminService{
     }
     
     assignMember_task(projectID,taskID,userID){
-        return axios.post(API_URL+`/projects/${projectID}/tasks/${taskID}/${userID}`,{
+        return axios.post(API_URL+`/tasks/${projectID}/tasks/${taskID}/${userID}`,{
             headers: {
                Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token')),
             }
          })
+    }
+    removemember_task(taskID,userID){
+    return axios.post(API_URL+`/projects/${taskID}/${userID}`,{
+        headers: {
+           Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        }
+     })
+
     }
 
 
