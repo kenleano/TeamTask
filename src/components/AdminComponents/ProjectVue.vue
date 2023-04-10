@@ -41,8 +41,8 @@
 
     
 <div id="projects" v-if="showTable">
-  <table class="table" >
-    <thead>
+  <!-- <table class="table" > -->
+    <!-- <thead>
     <tr>
       <th scope="col">name</th>
       <th scope="col">description</th>
@@ -64,7 +64,7 @@
       <td><button  @click="detailPject(project.id)">Details</button></td>
     </tr>
   </tbody>
-  </table>
+  </table> -->
   </div>
 
    <div id="containerProjects"  >
@@ -79,7 +79,7 @@
       </div>
       </div> -->
 
-      <div class="card border-success mb-3" style="max-width: 18rem;margin: 2rem;" v-for="task in  project.tasks" :key="task.id" >
+      <div class="card border-success mb-3" style="max-width: 18rem;margin: 2rem;" v-for="task in  this.project.tasks" :key="task.id" >
         <div class="card-header bg-transparent border-success">{{ task.name }}</div>
         <div class="card-body text-success">
             <!-- <h5 class="card-title">Success card title</h5> -->
@@ -92,12 +92,12 @@
             </ul>
 
 
-            <select class="form-select" aria-label="Default select example" v-model="selectedmember" >
-                 <option :value="meb.id" v-for="meb in  this.member" :key="meb.id">{{ meb.name }} </option >            
+            <select class="form-select" aria-label="Default select example"   v-model="task.selectedMember">
+                 <option :value="meb2.id" v-for="meb2 in  this.member" :key="meb2.id">{{ meb2.name }} </option >            
             </select>
 
             
-            <button type="button" class="btn btn-secondary"  @click="addMember(task.id)">Add New Member</button>
+            <button type="button" class="btn btn-secondary"  @click="addMember(task)">Add New Member</button>
 
         </div>
         <div class="card-footer bg-transparent border-success">Dead Line:{{ task.deadLine.substring(-10,10) }}</div>
@@ -140,7 +140,9 @@ export default {
         desciption:'', 
         date:'',
         showTable:true,
-        selectedmember:"", 
+        selectedmember:null,
+        copyProject:this.project, 
+        
 
         
 
@@ -161,10 +163,14 @@ export default {
             console.log(this.name,this.desciption,this.date); 
             const response = await AdminService.createTasks(this.project.id,this.name,this.desciption,this.date);
             console.log(response.data); 
-            this.projects.tasks.push(
+            console.log(this.project);
+
+            this.copyProject.tasks.push(
                 {"name":this.name, "description":this.desciption, "deadLine":this.date}
             )
-            // console.
+
+            this.$emit('update-project', this.copyProject);
+            console.log(this.project);
 
 
         }catch(e){
@@ -179,14 +185,20 @@ export default {
 
 
     }, 
-    async addMember(taskID){
+    async addMember(task){
         try{
-            const response = await AdminService.assignMember_task(this.project.id,taskID,this.selectedmember);
+            const response = await AdminService.assignMember_task(this.project.id,task.id,task.selectedMember);
             console.log(response.data); 
-            this.projects.tasks.members.push(
-                {name:this.name, "description":this.desciption, "deadLine":this.date}
+            const member= this.member.find(m=>m.id===task.selectedMember);
+            console.log(member);
+            console.log(this.copyProject.tasks)
+            const ind= this.copyProject.tasks.findIndex(t=>t.id==task.id);
+            console.log(this.copyProject.tasks[ind]);
+            this.copyProject.tasks[ind].members.push(
+                {id:this.selectedmember,name:member.name, email:member.email}
             )
-            // console.
+            this.$emit('update-project', this.copyProject);
+            console.log(this.project);
 
 
         }catch(e){

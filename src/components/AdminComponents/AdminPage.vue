@@ -114,7 +114,7 @@
 
 </div>
 </div>
-<ProjectVue :project="selectProject" v-if="detailsShown"  :member="members"/>
+<ProjectVue :project="selectProject"  @update-project="handleUpdateProject" v-if="detailsShown"  :member="members"/>
 </div>
 </template>
 <script>
@@ -216,7 +216,7 @@ import 'bootstrap/dist/css/bootstrap.css';
     }, 
      updateProject(projectID){
         
-        this.activeUpdate= true; 
+        this.activeUpdate= ! this.activeUpdate; 
         this.activeAdd= false;
 
         var projectGet= this.projects.find(obj=>obj.id===projectID); 
@@ -249,6 +249,14 @@ import 'bootstrap/dist/css/bootstrap.css';
       this.detailsShown=true; 
       
 
+    }, 
+    handleUpdateProject(p){
+
+      const index = this.projects.findIndex(obj => obj.id === p.id);
+
+      // Replace the object at that index
+      this.projects.splice(index, 1,p);
+      
     }
 
 
