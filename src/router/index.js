@@ -36,7 +36,7 @@ const routes = [
         component: LoginForm
     },
     {
-        path: "/projects",
+        path: "/m/projects",
         alias: "/projects",
         name: "ProjectPage",
         component: ProjectPage

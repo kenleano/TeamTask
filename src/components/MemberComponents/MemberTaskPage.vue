@@ -13,26 +13,53 @@
                     <p>Tasks:</p>
                     <div class="task-container">
                         <div class="task-item" v-for="task in project.tasks" :key="task.id">
-                            <h3>{{ task.name }}</h3>
-                            <p>{{ task.description }}</p>
+                            <table className="taskTable">
+                                <tr>{{ task.name }}</tr>
+                                <tr>{{ task.description }}</tr>
 
-                            <p>Date Created: {{ task.createdDate }}</p>
-                            <p>Deadline: {{ task.deadLine }}</p>
-                            <div v-for="member in task.members" :key="member.id">
-                                <p>Members: </p>
+                                <tr>Date Created: {{ task.createdDate }}</tr>
+                                <tr>Deadline: {{ task.deadLine }}</tr>
+                                <div v-for="member in task.members" :key="member.id">
+                                    <tr>Members: </tr>
 
-                                <p>{{ member.name }}</p>
-                                <p>--------------</p>
-                            </div>
+                                    <tr>{{ member.name }}</tr>
+                                    <p>--------------</p>
+                                </div>
+                            </table>
+
                             <div v-for="comment in task.comments" :key="comment.id">
-                                <p>{{ comment.commentOwner.name }}:</p>
-                                <p>{{ comment.content }}</p>
+                                <table className="commentTable">
+                                    <th>{{ comment.commentOwner.name }}:</th>
+                                    <th><button v-if="isCurrentUser(comment.commentOwner.email)"
+                                            @click="editComment(comment)">Edit</button></th>
+
+                                    <th><button v-if="isCurrentUser(comment.commentOwner.email)"
+                                            @click="deleteComment(comment.id)">Delete</button>
+                                    </th>
+
+                                    <tr>
+
+                                        {{ comment.content }}
+                                    </tr>
+                                    <div v-if="currentComment === comment && isCurrentUser(comment.commentOwner.email)" >
+                                    <form @submit.prevent="saveEditedComment(comment)">
+                            
+                                    <textarea v-model="currentComment.content" required></textarea>
+                                    <button className="addCommentBtn" type="submit" >Save</button>
+                                    <button type="button" @click="currentComment = null">Cancel</button>
+                                </form>
+                                    </div>
+                                </table>
+                              
                             </div>
-                            <form @submit.prevent="addComment(task.id)">
-                                <label for="description">Comment:</label>
-                                <textarea v-model="newComment" required></textarea>
-                                <button type="submit">Add Comment</button>
-                            </form>
+                            <td>
+
+                                <form @submit.prevent="addComment(task.id)">
+                                    <label for="description">Comment:</label>
+                                    <textarea v-model="newComment" required></textarea>
+                                    <button className="addCommentBtn" type="submit">Add Comment</button>
+                                </form>
+                            </td>
                         </div>
                     </div>
                 </div>
@@ -47,6 +74,8 @@ export default {
     data() {
         return {
             projects: [],
+            currentComment: null,
+            editedComment: "",
         };
     },
     props: {
@@ -85,6 +114,11 @@ export default {
             });
     },
     methods: {
+        isCurrentUser(commentEmail) {
+            const email = localStorage.getItem('email');
+           
+            return email === commentEmail;
+        },
         viewTasks(projectId) {
 
             this.$emit("view-tasks", projectId);
@@ -101,17 +135,59 @@ export default {
             axios.post(`http://localhost:8089/api2/m/comments/${taskId}`, formData)
                 .then(response => {
                     const taskIndex = this.project.tasks.findIndex(task => task.id === taskId);
-      this.project.tasks[taskIndex].comments.push(response.data);
+                    this.project.tasks[taskIndex].comments.push(response.data);
 
-      // Clear the newComment variable
-      this.newComment = '';
-                   console.log(response);
+                    // Clear the newComment variable
+                    this.newComment = '';
+                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error);
                 });
 
+        },
+        deleteComment(commentId) {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user && user.token) {
+                axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+            }
+            axios.delete(`http://localhost:8089/api2/m/comments/${commentId}`)
+                .then(response => {
+                    console.log(response);
+                    // Remove the deleted comment from the task's comments array
+                    const task = this.project.tasks.find(task => task.comments.some(comment => comment.id === commentId));
+                    task.comments = task.comments.filter(comment => comment.id !== commentId);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        editComment(comment) {
+            this.currentComment = comment;
+            
+
+        },
+        saveEditedComment(comment) {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user && user.token) {
+                axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+            }
+            
+            const formData = {
+                content:  comment.content,
+            }
+            console.log("EDITED COMMENT " + JSON.stringify(formData));
+
+            axios.put(`http://localhost:8089/api2/m/comments/${comment.id}`,formData)
+                .then(response => {
+                    console.log(response);
+                    this.currentComment = null;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
+
     },
     components: { NavigationBarMember }
 };
@@ -183,7 +259,7 @@ export default {
     color: #686871;
 }
 
-.task-item button {
+.addCommentBtn {
     background-color: #5051F9;
     border: none;
     border-radius: 5px;
@@ -193,5 +269,4 @@ export default {
     cursor: pointer;
     margin-top: 10px;
 }
-
 </style>

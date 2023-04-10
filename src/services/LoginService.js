@@ -11,6 +11,7 @@ class LoginService {
       })
       .then(response => {
         if (response.data.token) {
+          localStorage.setItem('email', email);
           localStorage.setItem('user', JSON.stringify(response.data));
         }
 
