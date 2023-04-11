@@ -1,28 +1,16 @@
 <template>
     <nav>
       <ul>
-        <li><router-link to="/profile">Profile</router-link></li>
-        <li><router-link to="/projects">Projects</router-link></li>
-        <!-- <li><router-link to="/members">Members</router-link></li> -->
-        <li v-if="isManager"><router-link to="/admin">Admin</router-link></li>
+        <li><router-link to="/api2/m/profile">Profile</router-link></li>
+        <li><router-link to="/api2/m/projects">Projects</router-link></li>
       </ul>
     </nav>
   </template>
   
   <script>
   export default {
-    name: 'NavigationBar',
-
-    data() {
-    return {
-      isManager:  JSON.parse(localStorage.getItem('role'))==="PROJECT_MANAGER" ? true :false, 
-
-
-
-    }
-    }
+    name: 'NavigationBarMember'
   }
-  
   </script>
   
   <style>

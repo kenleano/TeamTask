@@ -190,12 +190,5 @@ export default {
     background-color: #D34141;
   }
   
-  .project-item:last-child button {
-    background-color: #2ECC40;
-  }
-  
-  .project-item:last-child h2 {
-    color: #2ECC40;
-  }
   </style>
   

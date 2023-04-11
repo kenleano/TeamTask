@@ -10,6 +10,10 @@ import AdminPage from '@/components/AdminComponents/AdminPage'
 import CommentsPageVue from '@/components/CommentsPage.vue'
 import AdminAddprojects from '@/components/AdminComponents/AdminAddprojects'
 import AdminShowprojects from '@/components/AdminComponents/AdminShowprojects'
+import MemberProjectPage from '@/components/MemberComponents/MemberProjectPage.vue'
+import MemberProfilePage from '@/components/MemberComponents/MemberProfilePage.vue'
+import LoginMember from '@/components/LoginMember.vue'
+import MemberTaskPageVue from '@/components/MemberComponents/MemberTaskPage.vue'
 //import TaskContentVue from '@/components/TaskContent.vue'
 
 // Anytime a url is found in this router,
@@ -41,11 +45,13 @@ const routes = [
         component: AdminPage
     },
     {
-        path: "/projects",
+       
+        path: "/m/projects",
         alias: "/projects",
         name: "ProjectPage",
         component: ProjectPage
     },
+ 
     {
         path: "/tasks",
         alias: "/tasks",
@@ -63,8 +69,25 @@ const routes = [
         alias: "/members",
         name: "Members",
         component: MembersPage
-    }
-    ,
+    },
+    {
+        path: "/api2/m/projects",
+        alias: "/projects",
+        name: "MemberProjectPage",
+        component: MemberProjectPage
+    },
+    {
+        path: "/api2/m/profile",
+        alias: "/projects",
+        name: "ProjectPage",
+        component: MemberProfilePage
+    },
+    {
+        path: "/loginMember",
+        alias: "/projects",
+        name: "LoginMember",
+        component: LoginMember
+    },
     {
         path: "/profile",
         alias: "/profile",
@@ -72,9 +95,15 @@ const routes = [
         component: ProfilePage
     },
     {
-        path: "/comments",
+        path: "/api2/m/tasks",
         alias: "/comments",
-        name: "comments",
+        name: "MemberTaskPageVue",
+        component: MemberTaskPageVue
+    },
+    {
+        path: "/api2/m/projects1",
+        alias: "/comments",
+        name: "CommentsPageVue",
         component: CommentsPageVue
     }, 
     {

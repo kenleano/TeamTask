@@ -12,6 +12,7 @@ class LoginService {
       .then(response => {
         if (response.data.token) {
           console.log(response.data.token); 
+          localStorage.setItem('email', email);
           localStorage.setItem('user', JSON.stringify(response.data));
 
         }
@@ -34,8 +35,17 @@ class LoginService {
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+    return user;
+
   }
+  
 }
 
 export default new LoginService();
