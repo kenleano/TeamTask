@@ -204,8 +204,10 @@ import 'bootstrap/dist/css/bootstrap.css';
     async deleteProject(projectID){
       try{
         const response = await AdminService.deleteProjects(projectID);
-        if(response.data !=null) alert ("The project is deleted")
+        // if(response.data !=null) alert ("The project is deleted")
+        console.log(response.data); 
         this.projects.splice(projectID,1);
+        this.getProjects();
     
 
       }catch( e){

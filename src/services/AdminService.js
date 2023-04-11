@@ -69,13 +69,14 @@ class AdminService{
          })
     }
     removemember_task(taskID,userID){
-    return axios.post(API_URL+`/projects/${taskID}/${userID}`,{
+    return axios.delete(API_URL+`/tasks/${taskID}/${userID}`,{
         headers: {
            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token')),
         }
      })
 
     }
+
 
 
 

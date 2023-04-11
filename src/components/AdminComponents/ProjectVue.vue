@@ -87,7 +87,13 @@
             <p class="card-text">{{ task.description }}</p>
             <p class="card-text">members</p>
             <ul class="list-group">
-                <li class="list-group-item" v-for="meb in  task.members" :key="meb.id">{{ meb.email }}</li>
+                <li class="list-group-item" v-for="meb in  task.members" :key="meb.id">{{ meb.email }} 
+                    <button  @click="deleteMember(meb, task)">
+                    <FontAwesomeIcon :icon="faTrash" />
+                    </button>
+
+                
+                </li>
                 
             </ul>
 
@@ -118,11 +124,14 @@
 <script>
 // import NavigationBar from "@/components/NavigationBar.vue";
 import AdminService from '../../services/AdminService';
-
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export default {
     components: {
       // NavigationBarAdmin
+      FontAwesomeIcon,
+      
     }, 
     
     mounted() {
@@ -142,7 +151,8 @@ export default {
         showTable:true,
         selectedmember:null,
         copyProject:this.project, 
-        
+        faTrash: faTrash,
+
 
         
 
@@ -205,6 +215,24 @@ export default {
             console.log(e); 
         }
 
+
+    }, 
+    async deleteMember(m, task){
+        try{
+            console.log(this.project); 
+            const memberID= this.member.find(me=>me.email===m.email).id; 
+            console.log(memberID); 
+            const responsse= await AdminService.removemember_task(task.id, memberID); 
+            console.log(responsse); 
+            const index = this.member.findIndex(me=>me.email===m.email);
+
+            this.copyProject.tasks[task.id].members.splice(index,1); 
+        
+            this.$emit('update-project', this.copyProject);
+        }catch(e){
+            console.log(e); 
+        }
+       
 
     }
     // async getTasks(){

@@ -13,11 +13,21 @@ class LoginService {
         if (response.data.token) {
           console.log(response.data.token); 
           localStorage.setItem('user', JSON.stringify(response.data));
+
         }
 
         return response.data;
       });
   }
+  getUser(){
+    return axios.get(API_URL+`/auth/user`,{
+      headers: {
+         Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+      }
+   })
+  }
+
+
 
   logout() {
     localStorage.removeItem('user');

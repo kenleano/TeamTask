@@ -63,6 +63,24 @@
             console.log(error);
             this.error = 'Invalid email or password';
           });
+          this.getUser(); 
+
+        
+      }, 
+      async getUser(){
+        try{
+          const res= await LoginService.getUser(); 
+          localStorage.setItem('role', JSON.stringify(res.data.authorities[0].authority));
+          console.log( JSON.parse(localStorage.getItem('role')))
+
+
+          console.log(res.data); 
+
+        }catch(e){
+          console.log(e); 
+
+        }
+
       }
     }
   };
