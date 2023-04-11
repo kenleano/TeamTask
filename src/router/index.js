@@ -6,10 +6,10 @@ import ProjectPage from '../components/ProjectPage'
 import TaskPage from '../components/TaskPage'
 import MembersPage from '../components/MembersPage'
 import ProfilePage from '../components/ProfilePage'
-import AdminPage from '../components/AdminComponents/AdminPage'
+import AdminPage from '@/components/AdminComponents/AdminPage'
 import CommentsPageVue from '@/components/CommentsPage.vue'
-import AdminAddprojects from '../components/AdminComponents/AdminAddprojects'
-import AdminShowprojects from '../components/AdminComponents/AdminShowprojects'
+import AdminAddprojects from '@/components/AdminComponents/AdminAddprojects'
+import AdminShowprojects from '@/components/AdminComponents/AdminShowprojects'
 //import TaskContentVue from '@/components/TaskContent.vue'
 
 // Anytime a url is found in this router,
