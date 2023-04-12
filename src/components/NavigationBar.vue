@@ -1,16 +1,21 @@
 <template>
     <nav>
       <ul>
-        <li><router-link to="/profile">Profile</router-link></li>
+        <!-- <li><router-link to="/profile">Profile</router-link></li> -->
         <li><router-link to="/projects">Projects</router-link></li>
         <!-- <li><router-link to="/members">Members</router-link></li> -->
         <li v-if="isManager"><router-link to="/admin">Admin</router-link></li>
+        <button @click="logOut">Log Out</button>
       </ul>
+     
     </nav>
   </template>
   
   <script>
+      import LoginService from '@/services/LoginService.js';
+
   export default {
+
     name: 'NavigationBar',
 
     data() {
@@ -20,7 +25,15 @@
 
 
     }
-    }
+    },
+    methods: {
+      logOut(){
+          LoginService.logout(); 
+          this.$router.push('/');
+
+
+      }
+    },
   }
   
   </script>
