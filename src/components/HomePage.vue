@@ -8,9 +8,9 @@
     <button id="register">
       <router-link to="/register" style="text-decoration: none">Register</router-link>
     </button>
-    <button id="member">
+    <!-- <button id="member">
       <router-link to="/loginMember" style="text-decoration: none">Member</router-link>
-    </button>
+    </button> -->
     <div class="splash-page">
       <img src="../assets/splashBG.png">
     </div>

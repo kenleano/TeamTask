@@ -116,13 +116,13 @@
 </div>
 <ProjectVue :project="selectProject"  @update-project="handleUpdateProject" v-if="detailsShown"  :member="members"/>
 </div>
-<AppFooter/>
+<!-- <AppFooter/> -->
 </template>
 <script>
 import AdminService from '../../services/AdminService';
 import NavigationBar from "@/components/NavigationBar.vue";
 import ProjectVue from '@/components/AdminComponents/ProjectVue.vue'; 
-import AppFooter from '../AppFooter.vue';
+// import AppFooter from '../AppFooter.vue';
 import 'bootstrap/dist/css/bootstrap.css';
 
 // import NavigationBarAdmin from "@/components/AdminComponents/NavigationBarAdmin.vue"
@@ -131,7 +131,7 @@ import 'bootstrap/dist/css/bootstrap.css';
     components: {
       NavigationBar,
       ProjectVue,
-      AppFooter, 
+      // AppFooter, 
       // NavigationBarAdmin
     },
     data() {

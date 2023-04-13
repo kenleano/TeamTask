@@ -88,9 +88,9 @@
             <p class="card-text">members</p>
             <ul class="list-group">
                 <li class="list-group-item" v-for="meb in  task.members" :key="meb.id">{{ meb.email }} 
-                    <button  @click="deleteMember(meb, task)">
+                    <!-- <button  @click="deleteMember(meb, task)">
                     <FontAwesomeIcon :icon="faTrash" />
-                    </button>
+                    </button> -->
 
                 
                 </li>
@@ -124,13 +124,13 @@
 <script>
 // import NavigationBar from "@/components/NavigationBar.vue";
 import AdminService from '../../services/AdminService';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export default {
     components: {
       // NavigationBarAdmin
-      FontAwesomeIcon,
+      // FontAwesomeIcon,
       
     }, 
     
@@ -151,7 +151,7 @@ export default {
         showTable:true,
         selectedmember:null,
         copyProject:this.project, 
-        faTrash: faTrash,
+        // faTrash: faTrash,
 
 
         
